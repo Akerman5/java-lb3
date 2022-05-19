@@ -1,0 +1,164 @@
+import javax.crypto.Mac;
+import java.util.Scanner;
+import java.util.Random;
+
+public class Main {
+
+    public static final String ANSI_RED = "\u001B[31m";
+    static Random rand = new Random();
+    static int size;
+
+    public static void СтворюємМасивЗавдання1(int[] arr) {
+        int size;
+        Scanner skr = new Scanner(System.in);
+        System.out.println("Кількість масиву: ");
+        size = skr.nextInt();
+        System.out.println("Введіть елементи: ");
+        for (int i = 0; i < size; i++) {
+            arr[i] = skr.nextInt();
+        }
+
+    }
+    static void Завдання1(int[] arr, int m) {
+        int sum = 0;
+        int count_of_elements = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] % 2 != 0 && arr[i] >= m)
+            {
+                sum += arr[i];
+                count_of_elements++;
+            }
+        }
+        System.out.println("\tСума елементів масива: " + sum + "\n\tКількість не парних  елементів в масиві: " + count_of_elements);
+    }
+
+
+    public static void ВвідМасиву(int[] arr) {
+             for (int i=0;i<arr.length;i++)
+             {
+                 System.out.println(arr[i]);
+
+             }
+    }
+    static int[] СтворюємМасивЗавдання2(int min, int max) {
+        Scanner skr = new Scanner(System.in);
+        System.out.println("Введіть розмір масиву: ");
+        size = skr.nextInt();
+        int[] arr = new int[size];
+        for (int i = 0; i < size; i++)
+        {
+            arr[i] = rand.nextInt(max - min) + min;
+        }
+        return arr;
+    }
+    public static void Завдання2ДобутокВідємних(int[] arr) {
+
+        double s = 1;
+
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] < 0) {
+                s *= arr[i];
+
+            }
+        }
+        System.out.println("Добуток відємних чисел: " + s);
+
+
+    }
+    public static int Завдання2ПісляМінімального(int[] arr) {
+
+        int ind = 0, min = arr[0];
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] < min) {
+                min = arr[i];
+                ind = i;
+            }
+        }
+        return ind;
+
+    }
+    public static void Завдання2СумаМінімального(int[] arr) {
+        int sum = 0;
+        for (int i = Завдання2ПісляМінімального(arr) + 1; i < arr.length; i++)
+        {
+            sum += arr[i];
+        }
+        System.out.println("Сума чисел після мінімального числа: " + sum);
+
+    }
+
+
+
+    public static void main (String[]args) {
+
+        int ask = 0,ask1=0;
+        Scanner skr = new Scanner(System.in);
+
+        try {
+
+            Exception ERROR = new Exception();
+            while (ask != 3) {
+                System.out.print(" \nВеберіть завдання " +
+                        "          \n1 - Обчислити суму та кількість елементів з непарними номерами, які більші за значення m " +
+                        "          \n2 - Добуток від’ємних елементів масиву;  Суму елементів масиву, розташованих після мінімального елемента. " +
+                        "          \n3 - Вихід\n");
+                ask = skr.nextInt();
+                switch (ask) {
+
+                    case 1: {
+                        int[] arr = new int[10];
+                        int m;
+                        System.out.println("Введіть m :");
+                        m = skr.nextInt();
+                        СтворюємМасивЗавдання1(arr);
+                        Завдання1(arr, m);
+
+
+                    }break;
+
+                    case 2: {
+                        System.out.println("");
+                        System.out.println(
+                                         "\n1 - Ввід з клавіатури "+
+                                         "\n2 - Рандомний ввід на проміжку [-100;100]");
+                        ask1 =skr.nextInt();
+                        switch (ask1)
+                        {
+                            case 1: {
+                                int[] arr = new int[250];
+                                СтворюємМасивЗавдання1(arr);
+                                Завдання2ДобутокВідємних(arr);
+                                Завдання2ПісляМінімального(arr);
+                                Завдання2СумаМінімального(arr);
+                                ВвідМасиву(arr);
+                            }break;
+                            case 2: {
+                                int[] arr = new int[250];
+
+                               arr =СтворюємМасивЗавдання2(-100, 100);
+                                Завдання2ДобутокВідємних(arr);
+                                Завдання2ПісляМінімального(arr);
+                                Завдання2СумаМінімального(arr);
+                                ВвідМасиву(arr);
+                            }break;
+                        }
+                    }
+                    break;
+                    case 3: {
+                        System.out.println("Програма закрита");
+                    }
+
+                    default:
+                        System.out.println(ANSI_RED + ("Введіть вірно завдання!"));
+                }
+            }
+            throw ERROR;
+        }
+        catch (Exception err)
+        {
+            System.out.println("Дані введено не коректно!!");
+        }
+    }
+}
+
